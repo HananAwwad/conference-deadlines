@@ -3,7 +3,10 @@ description: Countdowns to top System/ARCH/Security/Carbon conference deadlines
 author: Abhishek Das
 
 domain: "aideadlin.es"
-baseurl: ""
+#baseurl: ""
+
+url: "https://hananawwad.github.io"
+baseurl: "/conference-deadlines"
 
 twitter_hashtag: machinelearning
 github_username: paperswithcode
