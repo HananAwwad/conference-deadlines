@@ -1,24 +1,87 @@
----
----
-
-
 <html>
   <head>
-    {% include head.html %}
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>Conference Deadlines</title>
+<meta name="description" content="Countdowns to top System/ARCH/Security/Carbon conference deadlines">
+<meta name="author" content="Abhishek Das">
+<link rel="stylesheet" type="text/css" href="/static/css/js-year-calendar.min.css?t=1747080751" media="screen,projection">
+
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/deadlines.css?t=1747080751" media="screen,projection">
+<link rel="stylesheet" type="text/css" href="/static/css/calendar.css?t=1747080751" media="screen,projection">
+
+<link rel="shortcut icon" href="/static/img/favicon.png">
+
+<script type="text/javascript" src="/static/js/js-year-calendar.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="/static/js/moment.min.js"></script>
+<script type="text/javascript" src="/static/js/moment-timezone-with-data.min.js"></script>
+<script type="text/javascript" src="/static/js/store.min.js"></script>
+<script type="text/javascript" src="/static/js/ouical.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-multiselect.min.js"></script>
+
   </head>
   <body>
-    {% include header.html %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <div style="vertical-align: middle; padding-top: 8px;">
+        <div>
+          <a class="navbar-brand" href="/" style="border-bottom: none; line-height: 0.1em;">
+          Conference Deadlines<br><br>
+          </a>
+        </div>
+        <div style="color: white; font-size: x-small;">
+          <a href="https://paperswithcode.com" class="pwc-link">
+            by 
+            <div class="icon-inner pwc-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="s-ion-icon"><path d="M88 128h48v256H88zM232 128h48v256h-48zM160 144h48v224h-48zM304 144h48v224h-48zM376 128h48v256h-48z"></path><path d="M104 104V56H16v400h88v-48H64V104zM408 56v48h40v304h-40v48h88V56z"></path></svg></div>
+            Papers With Code
+          </a>
+        </div>
+      </div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler"
+      aria-controls="navbars-toggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-toggler">
+      <ul class="navbar-nav mr-auto">
+        <li>
+          <a href="/" class="nav-link" style="border-bottom: none">Countdowns</a>
+        </li>
+        <li>
+          <a href="/calendar" class="nav-link" style="border-bottom: none;">Calendar</a>
+        </li>
+      </ul>
+      <div class="twitter-github-icons">
+        <a href="https://twitter.com/share" class="twitter-share-button"
+          data-text="Countdowns to top System/ARCH/Security/Carbon conference deadlines"
+          data-show-count="false" style="font-size: 13px;">Tweet</a>
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        &nbsp; &nbsp;
+        <iframe
+          src="https://ghbtns.com/github-btn.html?user=paperswithcode&repo=ai-deadlines&type=star&count=true"
+          frameborder="0" scrolling="0" width="95px" height="20px"></iframe>
+      </div>
+    </div>
+  </div>
+</nav>
     <div class="container">
         <div class="page-header">
             <div class="row">
                 <div class="col-12 col-sm-12">
                   <h1>
-                    {{ site.title }} 
+                    Conference Deadlines 
                   </h1>
                 </div>
                 <div class="meta col-12">
-                  {{ site.description }}.
-                  To add/edit a conference, <a target="_blank" href="//github.com/{{ site.github_username }}/{{ site.github_repo }}">send in a pull request</a>.
+                  Countdowns to top System/ARCH/Security/Carbon conference deadlines.
+                  To add/edit a conference, <a target="_blank" href="//github.com/paperswithcode/ai-deadlines">send in a pull request</a>.
                 </div>
             </div>
             <br>
@@ -38,11 +101,19 @@
                         multiple="multiple"
                         style="display: none"
                       >
-                        {% for type in site.data.types %}
-                        <option value="{{type.sub}}" id="{{type.sub}}-checkbox">
-                          {{type.name}} ({{type.sub}})
+                        
+                        <option value="SYSTEM" id="SYSTEM-checkbox">
+                          Systems (SYSTEM)
                         </option>
-                        {% endfor %}
+                        
+                        <option value="ARCH" id="ARCH-checkbox">
+                          Architecture (ARCH)
+                        </option>
+                        
+                        <option value="SECURITY" id="SECURITY-checkbox">
+                          Security (SECURITY)
+                        </option>
+                        
                       </select>
                     </div>
                   </div>
@@ -58,33 +129,29 @@
               </div>
               <div class="meta col-12">
                 You can optionally export all deadlines to
-                <a href="https://calendar.google.com/calendar/r?cid={{ site.url }}/ai-deadlines.ics">Google Calendar</a> or
+                <a href="https://calendar.google.com/calendar/r?cid=/ai-deadlines.ics">Google Calendar</a> or
                 <a href="/ai-deadlines.ics">.ics</a>.
               </div>
             </div>
         </div>
         <div id="confs">
         <div id="coming_confs">
-          {% for conf in site.data.conferences %}
-          <div id="{{conf.id}}" class="ConfItem {% for sub in conf.sub %} {{sub}}-conf {% endfor %}">
+          
+          <div id="atc25" class="ConfItem  SYSTEM-conf ">
             <div class="row conf-row">
                 <div class="col-6">
                   <span class="conf-title">
-                      <a title="{% if conf.full_name %}{{conf.full_name}}{% else %}Deadline{% endif %} Details" href="{{site.baseurl}}/conference?id={{ conf.id }}">{{conf.title}} {{conf.year}}</a>
+                      <a title="Deadline Details" href="/conference?id=atc25">USENIX ATC 2025</a>
                   </span>
                   <span class="conf-title-small">
-                      <a title="{% if conf.full_name %}{{conf.full_name}}{% else %}Deadline{% endif %} Details" href="{{site.baseurl}}/conference?id={{ conf.id }}">{{conf.title}} '{{conf.year | slice: -2, 3}}</a>
+                      <a title="Deadline Details" href="/conference?id=atc25">USENIX ATC '25</a>
                   </span>
                   <span class="conf-title-icon">
-                    <a title="Conference Website" href="{{conf.link}}" target="_blank"><img src="{{site.baseurl}}/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    <a title="Conference Website" href="https://www.usenix.org/conference/atc25/call-for-papers" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
                     &ZeroWidthSpace;
-                    {% if conf.paperslink %}
-                      <a title="Full List of Accepted Papers" href="{{conf.paperslink}}" target="_blank"><img src="{{site.baseurl}}/static/img/033-books.svg" class="badge-link" alt="Full List of Accepted Papers" /></a>
-                    {% endif %}
+                    
                     &ZeroWidthSpace;
-                    {% if conf.pwclink %}
-                      <a title="Browse All Papers with Code" href="{{conf.pwclink}}" target="_blank"><div class="icon-inner badge-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="s-ion-icon"><path d="M88 128h48v256H88zM232 128h48v256h-48zM160 144h48v224h-48zM304 144h48v224h-48zM376 128h48v256h-48z"></path><path d="M104 104V56H16v400h88v-48H64V104zM408 56v48h40v304h-40v48h88V56z"></path></svg></div></a>
-                    {% endif %}
+                    
                     &ZeroWidthSpace;
                   </span>
                 </div>
@@ -96,26 +163,24 @@
             <div class="row">
               <div class="col-12 col-sm-6">
                 <div class="meta">
-                  <span class="conf-date">{{conf.date}}.</span>
+                  <span class="conf-date">TBD.</span>
                   <span class="conf-place">
-                    {% if conf.place == "Online" %}
-                    <a href="#">{{conf.place}}</a>.
-                    {% else %}
-                    <a href="http://maps.google.com/?q={{conf.place}}">{{conf.place}}</a>.
-                    {% endif %}
+                    
+                    <a href="http://maps.google.com/?q=Cambridge, MA, USA">Cambridge, MA, USA</a>.
+                    
                   </span>
                 </div>
-                {% if conf.abstract %}
+                
                   <div class="meta">
-                      Abstract DL:{{conf.abstract}} {% if conf.early %}|  Early Notif:{{conf.early}} {% endif %}
-                     {% if conf.rebuttal %}|  Rebuttal DL:{{conf.rebuttal}}  {% endif %}
+                      Abstract DL:2025-01-07 |  Early Notif:2025-04-07 
+                     |  Rebuttal DL:2025-04-09  
                   </div>
-                {% endif %}
-                 {% if conf.note %}
+                
+                 
                   <div class="note">
-                      <b>Note: </b>{{conf.note}}
+                      <b>Note: </b>Final: 4/25 | Camera Ready: 6/3
                   </div>
-                {% endif %}
+                
 
               </div>
               <div class="col-12 col-sm-6">
@@ -129,14 +194,619 @@
             </div>
             <div class="row">
               <div class="col-12">
-                {% for sub in conf.sub %}
-                <span title="Click to only show {{sub}} conferences" data-sub="{{sub}}" class="conf-sub {{sub}}-tag"></span>
-                {% endfor %}
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
               </div>
             </div>
             <hr>
           </div>
-          {% endfor %}
+          
+          <div id="hotos25" class="ConfItem  SYSTEM-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=hotos25">HotOS 2025</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=hotos25">HotOS '25</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://sigops.org/s/conferences/hotos/2025/index.html" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=Banff">Banff</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Final: 4/1 | Camera Ready: 4/15
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="asplos26" class="ConfItem  ARCH-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=asplos26">ASPLOS 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=asplos26">ASPLOS '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=TBD">TBD</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 3/5/2025 | Rebuttal: 6/13 | Final: 6/24
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show ARCH conferences" data-sub="ARCH" class="conf-sub ARCH-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="micro25" class="ConfItem  ARCH-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=micro25">MICRO 2025</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=micro25">MICRO '25</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://www.microarch.org/micro58/submit/papers.php" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=TBD">TBD</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 4/4 | Final: 7/14
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show ARCH conferences" data-sub="ARCH" class="conf-sub ARCH-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="sosp25" class="ConfItem  SYSTEM-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=sosp25">SOSP 2025</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=sosp25">SOSP '25</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://sigops.org/s/conferences/sosp/2025/cfp.html" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=Seoul, Korea">Seoul, Korea</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 4/10 | Early: 7/1 | Rebuttal: 7/3 | Final: 7/15
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="ndss26-summer" class="ConfItem  SECURITY-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=ndss26-summer">NDSS (Summer) 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=ndss26-summer">NDSS (Summer) '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://www.ndss-symposium.org/ndss2026/submissions/call-for-papers/" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=San Diego, CA">San Diego, CA</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 4/16 | Final: 7/2
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SECURITY conferences" data-sub="SECURITY" class="conf-sub SECURITY-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="hotcarbon25" class="ConfItem  SYSTEM-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=hotcarbon25">HotCarbon 2025</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=hotcarbon25">HotCarbon '25</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://hotcarbon.org/cfp" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=Cambridge, MA, USA">Cambridge, MA, USA</a>.
+                    
+                  </span>
+                </div>
+                
+                  <div class="meta">
+                      Abstract DL:2025-05-05 
+                     
+                  </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 5/5 | Final: 6/13
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="eurosys26-spring" class="ConfItem  SYSTEM-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=eurosys26-spring">EuroSys (Spring) 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=eurosys26-spring">EuroSys (Spring) '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://2026.eurosys.org/cfp.html#cfp" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=Edinburgh">Edinburgh</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 5/8 | Rebuttal: 8/1 | Final: 8/22
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="ndss26-fall" class="ConfItem  SECURITY-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=ndss26-fall">NDSS (Fall) 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=ndss26-fall">NDSS (Fall) '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=San Diego, CA">San Diego, CA</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 7/30 | Final: 10/22
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SECURITY conferences" data-sub="SECURITY" class="conf-sub SECURITY-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="asplos26-fall" class="ConfItem  ARCH-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=asplos26-fall">ASPLOS (Fall) 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=asplos26-fall">ASPLOS (Fall) '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=TBD">TBD</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 8/13 | Rebuttal: 11/14 | Final: 11/24
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show ARCH conferences" data-sub="ARCH" class="conf-sub ARCH-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+          <div id="eurosys26-fall" class="ConfItem  SYSTEM-conf ">
+            <div class="row conf-row">
+                <div class="col-6">
+                  <span class="conf-title">
+                      <a title="Deadline Details" href="/conference?id=eurosys26-fall">EuroSys (Fall) 2026</a>
+                  </span>
+                  <span class="conf-title-small">
+                      <a title="Deadline Details" href="/conference?id=eurosys26-fall">EuroSys (Fall) '26</a>
+                  </span>
+                  <span class="conf-title-icon">
+                    <a title="Conference Website" href="https://2026.eurosys.org/cfp.html#cfp" target="_blank"><img src="/static/img/203-earth.svg" class="badge-link" alt="Link to Conference Website" /></a>
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                    
+                    &ZeroWidthSpace;
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span class="timer"></span>
+                  <span class="timer-small"></span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="meta">
+                  <span class="conf-date">TBD.</span>
+                  <span class="conf-place">
+                    
+                    <a href="http://maps.google.com/?q=Edinburgh">Edinburgh</a>.
+                    
+                  </span>
+                </div>
+                
+                 
+                  <div class="note">
+                      <b>Note: </b>Abstract: 9/18 | Final: 1/30/2026
+                  </div>
+                
+
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="deadline">
+                  <div>Deadline:
+                    <span class="deadline-time"></span>
+                  </div>
+                </div>
+                <div class="calendar"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                
+                <span title="Click to only show SYSTEM conferences" data-sub="SYSTEM" class="conf-sub SYSTEM-tag"></span>
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
         </div>
         <div id="past_confs">
           <h1 id="past-events-title">Past Events</h1>
@@ -146,7 +816,27 @@
         </div>
       </div>
       <footer>
-            {% include footer.html %}
+            <div class="row">
+  <div class="col-12 col-sm-12">
+    <a href="/">aideadlin.es</a>
+    was built and maintained from 2016-2021 by
+    <a href="https://twitter.com/abhshkdz">abhshkdz</a>. It is now run by
+    <a href="https://paperswithcode.com/">Papers With Code</a>.<br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-sm-12">
+    <div class="footer-links">
+    <a href="https://paperswithcode.com/site/terms">Terms</a>
+    <a href="https://paperswithcode.com/site/data-policy">Data Policy</a>
+    <a href="https://paperswithcode.com/site/cookies-policy">Cookies policy</a>
+    <a href=""> from
+      <img style="height: 11px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANAAAAAgCAMAAABU6AZfAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAAFiUAABYlAUlSJPAAAABFUExURUdwTBwqMhwqMxsqMhkqMxsqMhwqMgCA+hwrMxJIgBsrMxsqMgJ28AF58wF38BsqMwB58hsqMwF17wF07hwrMwRm4QJz7Wj6SIIAAAAUdFJOUwDP87wcPIT+4A1tVti1Ta0smZVzG3JP8wAABR9JREFUWMO1memWpCoMgF0QxX1//0e9kCAkAadq5tzKjzndQmM+szNFEWQ9puu6xn02BXm4j23bTsdapKJAMguFgRVT/Ejyx4uH5hgvL1PUfm69jEd6bN05GTJvXF5X/hfRcPyWe2kTLDFdRA4ENVMbZZJGMt3ppEttNMDC2X/Qa7MK1OrveZoKz2/445I+U4znuvaExxKZLFCqtym/A6rzn+OjbHj8ubwDmfESslvtgWea13WeckQPUKJTf/4USHkDnVXzCrT74DnmeX+8rjgcxA4QBmPpyAKdOm+5XwFpgHH/bG9AMzLMqM9DxxCQaM0qLr7U4xE/AgIDVRBHlcoDeYd7lFee6GZOBvaaskD8S6nut0Dg0ItZEt+IQAfjseIzRDvS/WCxWQJ17phqEGqepQBS/VaXZa0H/4XUYMVt6nr309DEjYvduPT2gWELQTr0iQbC1+SADOg/kjVvspGqX6zSRAgEKbqOf6zgd82AVB+8s0YNm5NL6Y8MGzttwKt0krP9+9A/+hzQTALoUX5MnxW7iCIEUmD7IVZb8G0G1HRE9UqbWKkEUFPSR0MWqH5eB65XmgzQdN3WGjxReROxPD2LROeBIEiD7UGLraBAjMcS9W9AquTPckBgoMqEWG1SIGN57otn5KO9Y30N4rq6MQFC5TX1cEWBfJLY+mbQ5ZMUm8UK7F1A9GNc90T3enkpCZhCdUzfdQq0Wp774gnZao55YU3SgkmAVBez1eDfR4BABd/XqY36ichyaLUnyJZ8jatimUBjqQTouK2M3OGs4miiiduN5bkHCL15C9Zw7heBRMHYSMRxIGyYFsPqpwTqactT8w0P0OSA9iRY9jQvrDyIAhCoAjrrR90I1PNCpcivHEh+cATUmS5xoCaNB3ggMzqgRO/RYPIb1WviDkB4sv22kB8ghQcgUIFWzyUmaQ6kpf5DCoTFh5fwQQCt493e9ypD5Xjq7S5cMQeEubpBf2oKCoSMohPzduBAi2yimhRIc3NvrOd+gCxPexvhcGPM3SRoJpbmIhAGSudTNgNCR+qIRL05UCebsxTIiAYOX6sEkONphRkw9A9ZjADIZIDg857we5MBSiQHVMlWJgXyeTBIyVpGD4RttHC4yVtENHn7K5ASdeM3QGX2sKcKBCBmITYmrGii9TOQT7JYwxOgrhbyby4XJrvs54kuR8vlCg4XEgEOEs8Q8R5DYZboCwEESpTmi/Hhc1Lo8zxPlghZjpbLqWVGUGxSes1y4W2lkkC+Wf0C6GPaxtZo0VQW4nOhsJLqAg01HXqgGN0+083MegKoYLdisbDqzHVG1iZJYe0EUDoB+dj149gDRCCgt2lZ1zA5nhvCyEwvrc/b3N/HiZlMgINmZaR/aX3MJluf7Kepo8+F5tRfUh1wR0odzg8Srnm9w7L5SyB/p6H9Ptt0Vj310ngAlDHbnLo3mGc00sJiQ+4KEM+I8xC7fWv5VGcz3Y0C2ZCa70sgf0tXbnbY1jXpln3W6jYXDG4jNthdrfVWn8n4gAVAZe+0GgaEaeGFx4XRQyTM9yWQnNuIAy5/HPAWPuDJ8Yc66sYvSeY/8dhlYqH0kuQzkFQ03nnHCyI/gtc0GfM7BVPmL5J0yHPkXm6d3u6v/TLw3GL5ayDr6WW47awHYmS1VC+XJOVQcCCZBPk13SCvgmcb8uI/UqjqdvlOlk3j5OU20C0putdO1ZWNo0a8oumXslx0vMYaNrfPURt2hnp5G2rhtsEP5j/3Wqt0fQd1YgAAAABJRU5ErkJggg==">
+    </a>
+  </div>
+  </div>
+</div>
+
       </footer>
       <br><br>
     </div>
@@ -158,9 +848,123 @@
                       '#ff9f43', '#10ac84', '#222f3e']
 
         
-        {% include load_data.js %}
-        {% include utils.js %}
-        {% include multiselect_handler.js %}
+        
+var subs = [];
+var _all_subs = [];
+// Get all subs
+var conf_type_data = [{"name":"Systems","sub":"SYSTEM","color":"#1f77b4"},{"name":"Architecture","sub":"ARCH","color":"#ff7f0e"},{"name":"Security","sub":"SECURITY","color":"#2ca02c"}];
+var sub2name = {}; var name2sub = {};
+for (var i = 0; i < conf_type_data.length; i++) {
+    _all_subs[i] = conf_type_data[i]['sub'];
+    sub2name[conf_type_data[i]['sub']] = conf_type_data[i]['name'];
+    name2sub[conf_type_data[i]['name']] = conf_type_data[i]['sub'];
+}
+const all_subs = _all_subs;
+
+
+        // Borrowed from https://github.com/moment/moment-timezone/issues/167
+// Adds support for time zones 'UTC-12'..'UTC+12'
+function addUtcTimeZones() {
+  // Moment.js uses the IANA timezone database, which supports generic time zones like 'Etc/GMT+1'.
+  // However, the signs for these time zones are inverted compared to ISO 8601.
+  // For more details, see https://github.com/moment/moment-timezone/issues/167
+  for (let offset = -12; offset <= 12; offset++) {
+    const posixSign = offset <= 0 ? "+" : "-";
+    const isoSign = offset >= 0 ? "+" : "-";
+    const link = `Etc/GMT${posixSign}${Math.abs(
+      offset
+    )}|UTC${isoSign}${Math.abs(offset)}`;
+    moment.tz.link(link);
+  }
+}
+
+function update_filtering(data) {
+  var page_url = "";
+  store.set("aideadlin.es-subs", data.subs);
+
+  $(".confItem").hide();
+  for (const j in data.all_subs) {
+    const s = data.all_subs[j];
+    const identifier = "." + s + "-conf";
+    if (data.subs.includes(s)) {
+      $(identifier).show();
+    }
+  }
+
+  if (subs.length == 0) {
+    window.history.pushState("", "", page_url);
+  } else {
+    window.history.pushState("", "", page_url + "/?sub=" + data.subs.join());
+  }
+}
+
+function createCalendarFromObject(data) {
+  return createCalendar({
+    options: {
+      class: "calendar-obj",
+
+      // You can pass an ID. If you don't, one will be generated for you
+      id: data.id,
+    },
+    data: {
+      // Event title
+      title: data.title,
+
+      // Event start date
+      start: data.date,
+
+      // Event duration
+      duration: 60,
+    },
+  });
+}
+
+        // Multi-select handler
+$("#subject-select").multiselect({
+  includeSelectAllOption: true,
+  numberDisplayed: 5,
+  onChange: function (option, checked, select) {
+    var csub = $(option).val();
+    if (checked == true) {
+      if (subs.indexOf(csub) < 0) subs.push(csub);
+    } else {
+      var idx = subs.indexOf(csub);
+      if (idx >= 0) subs.splice(idx, 1);
+      // In case a conf with multiple types (including this type) is wrongly hid, show all confs with at least one checked type.
+      for (var i = 0; i < subs.length; i++) {
+        // $('.' + subs[i] + '-conf').show();
+      }
+    }
+    update_filtering({ subs: subs, all_subs: all_subs });
+  },
+  onSelectAll: function (options) {
+    subs = all_subs;
+    update_filtering({ subs: subs, all_subs: all_subs });
+  },
+  onDeselectAll: function (options) {
+    subs = [];
+    update_filtering({ subs: subs, all_subs: all_subs });
+  },
+  buttonText: function (options, select) {
+    if (options.length === 0) {
+      return "None selected";
+    } else {
+      var labels = [];
+      options.each(function () {
+        if ($(this).attr("value") !== undefined) {
+          labels.push($(this).attr("value"));
+        } else {
+          labels.push($(this).html());
+        }
+      });
+      return labels.join(", ") + "";
+    }
+  },
+  buttonTitle: function (options, select) {
+    return "";
+  },
+});
+
 
         addUtcTimeZones();
 
@@ -172,32 +976,29 @@
           $('.local-timezone-hide').hide();
         }
 
-        {% for conf in site.data.conferences %}
-        {% for sub in conf.sub %}
-        $('#{{conf.id}} .{{sub}}-tag').html(sub2name["{{sub}}"].toLocaleLowerCase());
-        {% endfor %}
-        {% if conf.deadline == "TBA" %}
-          $('#{{conf.id}} .timer').html("TBA");
-          $('#{{conf.id}} .deadline-time').html("TBA");
-        {% else %}
+        
+        
+        $('#atc25 .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
           // adjust date according to deadline timezone
-          var timezone = {% if conf.timezone %}"{{conf.timezone}}" {% else %} "America/New_York" {% endif %};
-          var confDate = moment.tz("{{conf.deadline}}", timezone);
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-01-14 23:59:59 +0000", timezone);
 
           // render countdown timer
-          $('#{{conf.id}} .timer').countdown(confDate.toDate(), function (event) {
+          $('#atc25 .timer').countdown(confDate.toDate(), function (event) {
               $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
           });
 
           // render countdown timer small
-          $('#{{conf.id}} .timer-small').countdown(confDate.toDate(), function (event) {
+          $('#atc25 .timer-small').countdown(confDate.toDate(), function (event) {
               $(this).html(event.strftime('%Dd %H:%M:%S'));
           });
 
           // convert deadline to local timezone
           try {
             var localConfDate = moment.tz(confDate, local_timezone);
-            $('#{{conf.id}} .deadline-time').html(localConfDate.toString());
+            $('#atc25 .deadline-time').html(localConfDate.toString());
           }
           catch(err) {
             console.log("Error converting to local timezone.");
@@ -205,27 +1006,527 @@
 
           // add calendar button
           var myCalendar = createCalendarFromObject({
-            id:  '{{conf.id}}',
-            title: '{{conf.title}} {{conf.year}} deadline',
+            id:  'atc25',
+            title: 'USENIX ATC 2025 deadline',
             date: confDate.toDate(),
             duration: 60,
           })
-          document.querySelector('#{{conf.id}} .calendar').appendChild(myCalendar);
+          document.querySelector('#atc25 .calendar').appendChild(myCalendar);
 
           // check if date has passed, add 'past' class to it
           var today = moment();
           diff = today.diff(confDate);
 
-          $('#{{conf.id}}').attr("diff", diff)
+          $('#atc25').attr("diff", diff)
           if (diff > 0) {
-            $('#{{conf.id}}').addClass('past');
-            $('#{{conf.id}}').appendTo($("#past_confs"))
-            $('#{{conf.id}} .timer').replaceWith($('#{{conf.id}} .deadline'));
-            $('#{{conf.id}} .timer-small').replaceWith($('#{{conf.id}} .deadline'));
-            $('#{{conf.id}} .calendar').remove();
+            $('#atc25').addClass('past');
+            $('#atc25').appendTo($("#past_confs"))
+            $('#atc25 .timer').replaceWith($('#atc25 .deadline'));
+            $('#atc25 .timer-small').replaceWith($('#atc25 .deadline'));
+            $('#atc25 .calendar').remove();
           }
-        {% endif %}
-        {% endfor %}
+        
+        
+        
+        $('#hotos25 .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-01-15 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#hotos25 .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#hotos25 .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#hotos25 .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'hotos25',
+            title: 'HotOS 2025 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#hotos25 .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#hotos25').attr("diff", diff)
+          if (diff > 0) {
+            $('#hotos25').addClass('past');
+            $('#hotos25').appendTo($("#past_confs"))
+            $('#hotos25 .timer').replaceWith($('#hotos25 .deadline'));
+            $('#hotos25 .timer-small').replaceWith($('#hotos25 .deadline'));
+            $('#hotos25 .calendar').remove();
+          }
+        
+        
+        
+        $('#asplos26 .ARCH-tag').html(sub2name["ARCH"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-03-12 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#asplos26 .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#asplos26 .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#asplos26 .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'asplos26',
+            title: 'ASPLOS 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#asplos26 .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#asplos26').attr("diff", diff)
+          if (diff > 0) {
+            $('#asplos26').addClass('past');
+            $('#asplos26').appendTo($("#past_confs"))
+            $('#asplos26 .timer').replaceWith($('#asplos26 .deadline'));
+            $('#asplos26 .timer-small').replaceWith($('#asplos26 .deadline'));
+            $('#asplos26 .calendar').remove();
+          }
+        
+        
+        
+        $('#micro25 .ARCH-tag').html(sub2name["ARCH"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-04-11 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#micro25 .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#micro25 .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#micro25 .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'micro25',
+            title: 'MICRO 2025 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#micro25 .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#micro25').attr("diff", diff)
+          if (diff > 0) {
+            $('#micro25').addClass('past');
+            $('#micro25').appendTo($("#past_confs"))
+            $('#micro25 .timer').replaceWith($('#micro25 .deadline'));
+            $('#micro25 .timer-small').replaceWith($('#micro25 .deadline'));
+            $('#micro25 .calendar').remove();
+          }
+        
+        
+        
+        $('#sosp25 .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-04-17 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#sosp25 .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#sosp25 .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#sosp25 .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'sosp25',
+            title: 'SOSP 2025 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#sosp25 .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#sosp25').attr("diff", diff)
+          if (diff > 0) {
+            $('#sosp25').addClass('past');
+            $('#sosp25').appendTo($("#past_confs"))
+            $('#sosp25 .timer').replaceWith($('#sosp25 .deadline'));
+            $('#sosp25 .timer-small').replaceWith($('#sosp25 .deadline'));
+            $('#sosp25 .calendar').remove();
+          }
+        
+        
+        
+        $('#ndss26-summer .SECURITY-tag').html(sub2name["SECURITY"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-04-23 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#ndss26-summer .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#ndss26-summer .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#ndss26-summer .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'ndss26-summer',
+            title: 'NDSS (Summer) 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#ndss26-summer .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#ndss26-summer').attr("diff", diff)
+          if (diff > 0) {
+            $('#ndss26-summer').addClass('past');
+            $('#ndss26-summer').appendTo($("#past_confs"))
+            $('#ndss26-summer .timer').replaceWith($('#ndss26-summer .deadline'));
+            $('#ndss26-summer .timer-small').replaceWith($('#ndss26-summer .deadline'));
+            $('#ndss26-summer .calendar').remove();
+          }
+        
+        
+        
+        $('#hotcarbon25 .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-05-12 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#hotcarbon25 .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#hotcarbon25 .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#hotcarbon25 .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'hotcarbon25',
+            title: 'HotCarbon 2025 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#hotcarbon25 .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#hotcarbon25').attr("diff", diff)
+          if (diff > 0) {
+            $('#hotcarbon25').addClass('past');
+            $('#hotcarbon25').appendTo($("#past_confs"))
+            $('#hotcarbon25 .timer').replaceWith($('#hotcarbon25 .deadline'));
+            $('#hotcarbon25 .timer-small').replaceWith($('#hotcarbon25 .deadline'));
+            $('#hotcarbon25 .calendar').remove();
+          }
+        
+        
+        
+        $('#eurosys26-spring .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-05-15 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#eurosys26-spring .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#eurosys26-spring .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#eurosys26-spring .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'eurosys26-spring',
+            title: 'EuroSys (Spring) 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#eurosys26-spring .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#eurosys26-spring').attr("diff", diff)
+          if (diff > 0) {
+            $('#eurosys26-spring').addClass('past');
+            $('#eurosys26-spring').appendTo($("#past_confs"))
+            $('#eurosys26-spring .timer').replaceWith($('#eurosys26-spring .deadline'));
+            $('#eurosys26-spring .timer-small').replaceWith($('#eurosys26-spring .deadline'));
+            $('#eurosys26-spring .calendar').remove();
+          }
+        
+        
+        
+        $('#ndss26-fall .SECURITY-tag').html(sub2name["SECURITY"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-08-06 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#ndss26-fall .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#ndss26-fall .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#ndss26-fall .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'ndss26-fall',
+            title: 'NDSS (Fall) 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#ndss26-fall .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#ndss26-fall').attr("diff", diff)
+          if (diff > 0) {
+            $('#ndss26-fall').addClass('past');
+            $('#ndss26-fall').appendTo($("#past_confs"))
+            $('#ndss26-fall .timer').replaceWith($('#ndss26-fall .deadline'));
+            $('#ndss26-fall .timer-small').replaceWith($('#ndss26-fall .deadline'));
+            $('#ndss26-fall .calendar').remove();
+          }
+        
+        
+        
+        $('#asplos26-fall .ARCH-tag').html(sub2name["ARCH"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-08-20 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#asplos26-fall .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#asplos26-fall .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#asplos26-fall .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'asplos26-fall',
+            title: 'ASPLOS (Fall) 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#asplos26-fall .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#asplos26-fall').attr("diff", diff)
+          if (diff > 0) {
+            $('#asplos26-fall').addClass('past');
+            $('#asplos26-fall').appendTo($("#past_confs"))
+            $('#asplos26-fall .timer').replaceWith($('#asplos26-fall .deadline'));
+            $('#asplos26-fall .timer-small').replaceWith($('#asplos26-fall .deadline'));
+            $('#asplos26-fall .calendar').remove();
+          }
+        
+        
+        
+        $('#eurosys26-fall .SYSTEM-tag').html(sub2name["SYSTEM"].toLocaleLowerCase());
+        
+        
+          // adjust date according to deadline timezone
+          var timezone = "Etc/GMT+8" ;
+          var confDate = moment.tz("2025-09-25 23:59:59 +0000", timezone);
+
+          // render countdown timer
+          $('#eurosys26-fall .timer').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%D days %Hh %Mm %Ss'));
+          });
+
+          // render countdown timer small
+          $('#eurosys26-fall .timer-small').countdown(confDate.toDate(), function (event) {
+              $(this).html(event.strftime('%Dd %H:%M:%S'));
+          });
+
+          // convert deadline to local timezone
+          try {
+            var localConfDate = moment.tz(confDate, local_timezone);
+            $('#eurosys26-fall .deadline-time').html(localConfDate.toString());
+          }
+          catch(err) {
+            console.log("Error converting to local timezone.");
+          }
+
+          // add calendar button
+          var myCalendar = createCalendarFromObject({
+            id:  'eurosys26-fall',
+            title: 'EuroSys (Fall) 2026 deadline',
+            date: confDate.toDate(),
+            duration: 60,
+          })
+          document.querySelector('#eurosys26-fall .calendar').appendChild(myCalendar);
+
+          // check if date has passed, add 'past' class to it
+          var today = moment();
+          diff = today.diff(confDate);
+
+          $('#eurosys26-fall').attr("diff", diff)
+          if (diff > 0) {
+            $('#eurosys26-fall').addClass('past');
+            $('#eurosys26-fall').appendTo($("#past_confs"))
+            $('#eurosys26-fall .timer').replaceWith($('#eurosys26-fall .deadline'));
+            $('#eurosys26-fall .timer-small').replaceWith($('#eurosys26-fall .deadline'));
+            $('#eurosys26-fall .calendar').remove();
+          }
+        
+        
 
         // Sort coming_confs and past_confs
         $("#coming_confs .ConfItem").sort(function (a, b) {
@@ -244,7 +1545,22 @@
           }
         });
 
-        {% include handle_url_retrieval.js %}
+        // Get subjects from URL/Cache
+var url = new URL(window.location);
+subs = url.searchParams.get("sub");
+if (subs == undefined) {
+  subs = store.get("aideadlin.es-subs");
+} else {
+  subs = subs.toUpperCase().split(",");
+}
+
+// Apply selections
+if (subs == undefined) {
+  subs = all_subs;
+}
+$("#subject-select").multiselect("select", subs);
+update_filtering({ subs: subs, all_subs: all_subs });
+
 
         // Event handler on sub badge click
         $('.conf-sub').click(function (e) {
@@ -256,7 +1572,28 @@
         });
 
     });
-    {% include google_analytics.js %}
+    (function (i, s, o, g, r, a, m) {
+  i["GoogleAnalyticsObject"] = r;
+  (i[r] =
+    i[r] ||
+    function () {
+      (i[r].q = i[r].q || []).push(arguments);
+    }),
+    (i[r].l = 1 * new Date());
+  (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+  a.async = 1;
+  a.src = g;
+  m.parentNode.insertBefore(a, m);
+})(
+  window,
+  document,
+  "script",
+  "https://www.google-analytics.com/analytics.js",
+  "ga"
+);
+ga("create", "", "auto");
+ga("send", "pageview");
+
     </script>
   </body>
 </html>
