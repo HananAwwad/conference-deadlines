@@ -105,7 +105,13 @@
                     {% endif %}
                   </span>
                 </div>
-                {% if conf.note %}
+                {% if conf.abstract %}
+                  <div class="meta">
+                      Abstract DL:{{conf.abstract}} {% if conf.early %}|  Early Notif:{{conf.early}} {% endif %}
+                     {% if conf.rebuttal %}|  Rebuttal DL:{{conf.rebuttal}}  {% endif %}
+                  </div>
+                {% endif %}
+                 {% if conf.note %}
                   <div class="note">
                       <b>Note: </b>{{conf.note}}
                   </div>
